@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CloudDrive 云盘 - 登录</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    body { overflow: auto; }
+  </style>
+</head>
+<body>
+
+<div class="login-page">
+  <div class="login-card">
+    <div class="login-header">
+      <div class="login-logo">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 22C4.69 22 2 19.31 2 16c0-2.63 1.68-4.87 4.01-5.72C6.72 6.98 10.06 4 14 4c3.12 0 5.84 1.68 7.38 4.19C21.59 8.07 21.8 8 22 8c2.76 0 5 2.24 5 5 0 .16-.01.32-.03.47C28.76 14.13 30 15.87 30 18c0 2.21-1.79 4-4 4H8z" fill="white"/>
+        </svg>
+      </div>
+      <h1>CloudDrive 云盘</h1>
+      <p>安全、快速的企业云存储平台</p>
+    </div>
+
+    <div class="login-body">
+      <div class="login-form-group">
+        <label class="login-label" for="emailInput">邮箱或用户名</label>
+        <div class="login-input-wrap">
+          <input class="login-input" id="emailInput" type="text" placeholder="请输入邮箱地址" value="demo@clouddrive.com" autocomplete="username">
+          <span class="login-input-icon">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          </span>
+        </div>
+      </div>
+
+      <div class="login-form-group">
+        <label class="login-label" for="passwordInput">密码</label>
+        <div class="login-input-wrap">
+          <input class="login-input" id="passwordInput" type="password" placeholder="请输入密码" value="••••••••" autocomplete="current-password">
+          <span class="login-input-icon" style="cursor:pointer" onclick="togglePassword()">
+            <svg id="eyeIcon" width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+          </span>
+        </div>
+      </div>
+
+      <div class="login-options">
+        <label>
+          <input type="checkbox" checked>
+          保持登录状态
+        </label>
+        <a href="#">忘记密码？</a>
+      </div>
+
+      <button class="login-btn" onclick="doLogin()">登 录</button>
+
+      <div class="login-divider">或通过以下方式登录</div>
+
+      <button class="login-sso-btn" onclick="showToast('企业 SSO 功能演示', 'info')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#0078d4"><path d="M11 11V0H0v11h11zm2 0h11V0H13v11zM0 13h11v11H0V13zm13 0h11v11H13V13z"/></svg>
+        使用 Microsoft 账户登录
+      </button>
+    </div>
+
+    <div class="login-footer">
+      没有账户？ <a href="#">立即注册</a> &nbsp;|&nbsp;
+      <a href="#">隐私政策</a> &nbsp;|&nbsp; <a href="#">服务条款</a>
+    </div>
+  </div>
+</div>
+
+<!-- Toast container -->
+<div id="toastContainer" class="toast-container"></div>
+
+<script src="js/app.js"></script>
+<script>
+function togglePassword() {
+  const input = document.getElementById('passwordInput');
+  input.type = input.type === 'password' ? 'text' : 'password';
+}
+
+function doLogin() {
+  const email = document.getElementById('emailInput').value.trim();
+  const pass = document.getElementById('passwordInput').value;
+  if (!email || !pass) {
+    showToast('请填写邮箱和密码', 'error');
+    return;
+  }
+  const btn = document.querySelector('.login-btn');
+  btn.textContent = '正在登录...';
+  btn.disabled = true;
+  setTimeout(() => {
+    showToast('登录成功，正在跳转...', 'success');
+    setTimeout(() => { window.location.href = 'index.html'; }, 1000);
+  }, 800);
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter') doLogin();
+});
+</script>
+</body>
+</html>
