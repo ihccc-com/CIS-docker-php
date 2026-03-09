@@ -60,107 +60,288 @@ input, select, textarea { font-family: var(--font); }
   background: var(--primary);
   display: flex;
   align-items: center;
-  padding: 0 12px;
-  gap: 12px;
+  padding: 0 4px 0 0;
+  gap: 0;
   flex-shrink: 0;
   z-index: 100;
 }
 
-.topbar-brand {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--white);
-  font-size: 18px;
-  font-weight: 600;
-  white-space: nowrap;
-  min-width: 160px;
-}
-
-.topbar-brand .brand-icon {
-  width: 28px;
-  height: 28px;
+/* ---- Waffle / App Launcher ---- */
+.topbar-waffle {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  position: relative;
+  border: none;
+  background: transparent;
+  color: white;
+  transition: background .15s;
+}
+.topbar-waffle:hover { background: rgba(255,255,255,.15); }
+
+.waffle-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 5px);
+  grid-template-rows: repeat(3, 5px);
+  gap: 3px;
+}
+.waffle-dot {
+  width: 5px;
+  height: 5px;
+  background: white;
+  border-radius: 1px;
 }
 
-.topbar-brand .brand-icon svg {
-  fill: white;
+/* ---- Brand ---- */
+.topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--white);
+  font-size: 16px;
+  font-weight: 400;
+  white-space: nowrap;
+  padding: 0 8px 0 2px;
+  text-decoration: none;
+  border-left: 1px solid rgba(255,255,255,.25);
+  height: 32px;
+  margin-right: 8px;
 }
 
+.topbar-brand .brand-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ---- Search Bar — white background like real OneDrive ---- */
 .topbar-search {
   flex: 1;
-  max-width: 560px;
+  max-width: 540px;
   position: relative;
+  margin: 0 8px;
 }
 
 .topbar-search input {
   width: 100%;
   height: 32px;
-  padding: 0 36px 0 12px;
-  border: 1px solid rgba(255,255,255,.4);
+  padding: 0 12px 0 36px;
+  border: 1px solid transparent;
   border-radius: 2px;
-  background: rgba(255,255,255,.2);
-  color: var(--white);
+  background: rgba(255,255,255,.92);
+  color: #201f1e;
   font-size: 13px;
   outline: none;
-  transition: background .15s, border-color .15s;
+  transition: background .15s, box-shadow .15s;
 }
 
-.topbar-search input::placeholder { color: rgba(255,255,255,.7); }
+.topbar-search input::placeholder { color: #605e5c; }
 .topbar-search input:focus {
-  background: rgba(255,255,255,.3);
-  border-color: rgba(255,255,255,.7);
+  background: var(--white);
+  box-shadow: 0 2px 6px rgba(0,0,0,.2);
 }
 
 .topbar-search .search-icon {
   position: absolute;
-  right: 8px;
+  left: 10px;
   top: 50%;
   transform: translateY(-50%);
-  color: rgba(255,255,255,.8);
+  color: #605e5c;
+  pointer-events: none;
 }
 
+/* ---- Right action buttons ---- */
 .topbar-actions {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 0;
   margin-left: auto;
 }
 
 .topbar-icon-btn {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 48px;
   border: none;
   background: transparent;
   color: var(--white);
-  border-radius: var(--radius);
+  border-radius: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: background .15s;
+  position: relative;
+  flex-shrink: 0;
 }
 
-.topbar-icon-btn:hover { background: rgba(255,255,255,.2); }
+.topbar-icon-btn:hover { background: rgba(255,255,255,.15); }
+
+/* Notification badge dot */
+.notif-badge {
+  position: absolute;
+  top: 9px;
+  right: 7px;
+  width: 8px;
+  height: 8px;
+  background: #ff4343;
+  border-radius: 50%;
+  border: 1.5px solid var(--primary);
+}
+
+/* ---- Avatar & profile dropdown ---- */
+.topbar-avatar-wrap {
+  position: relative;
+  margin: 0 4px;
+}
 
 .topbar-avatar {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: rgba(255,255,255,.3);
-  border: 2px solid rgba(255,255,255,.6);
-  color: var(--white);
-  font-weight: 600;
+  background: #c7e0f4;
+  color: var(--primary);
+  font-weight: 700;
   font-size: 13px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background .15s;
+  transition: opacity .15s;
+  border: none;
+  flex-shrink: 0;
 }
 
-.topbar-avatar:hover { background: rgba(255,255,255,.4); }
+.topbar-avatar:hover { opacity: .85; }
+
+.profile-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 300px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  z-index: 9999;
+  overflow: hidden;
+  animation: fadeInScale .12s ease;
+}
+
+.profile-dropdown.hidden { display: none; }
+
+.profile-header {
+  background: var(--primary);
+  padding: 20px;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.profile-avatar-lg {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #c7e0f4;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.profile-name { font-size: 15px; font-weight: 600; }
+.profile-email { font-size: 12px; opacity: .85; margin-top: 2px; }
+
+.profile-actions {
+  padding: 8px;
+}
+
+.profile-action-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background .1s;
+}
+.profile-action-item:hover { background: var(--hover-bg); }
+.profile-action-item svg { flex-shrink: 0; color: var(--text-secondary); }
+
+.profile-sep { height: 1px; background: var(--border); margin: 4px 0; }
+
+/* Waffle app launcher panel */
+.waffle-panel {
+  position: fixed;
+  top: 48px;
+  left: 0;
+  width: 320px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  z-index: 9999;
+  padding: 16px;
+  animation: fadeInScale .12s ease;
+}
+
+.waffle-panel.hidden { display: none; }
+
+.waffle-panel-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin-bottom: 12px;
+  padding: 0 4px;
+}
+
+.waffle-apps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+}
+
+.waffle-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 4px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background .1s;
+  text-align: center;
+}
+
+.waffle-app:hover { background: var(--hover-bg); }
+
+.waffle-app-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.waffle-app-name {
+  font-size: 11px;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
 
 /* =========================================
    APP SHELL (sidebar + content)

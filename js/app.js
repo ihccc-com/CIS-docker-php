@@ -629,3 +629,29 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'u' || e.key === 'U') openUploadModal();
   });
 });
+
+/* ---- Waffle / Profile dropdown toggles (shared across all pages) ---- */
+function toggleWaffle() {
+  const p = document.getElementById('wafflePanel');
+  const pd = document.getElementById('profileDropdown');
+  if (pd) pd.classList.add('hidden');
+  if (p) p.classList.toggle('hidden');
+}
+
+function toggleProfile() {
+  const pd = document.getElementById('profileDropdown');
+  const wp = document.getElementById('wafflePanel');
+  if (wp) wp.classList.add('hidden');
+  if (pd) pd.classList.toggle('hidden');
+}
+
+document.addEventListener('click', function(e) {
+  const wp = document.getElementById('wafflePanel');
+  const pd = document.getElementById('profileDropdown');
+  if (wp && !wp.contains(e.target) && !e.target.closest('.topbar-waffle')) {
+    wp.classList.add('hidden');
+  }
+  if (pd && !pd.contains(e.target) && !e.target.closest('.topbar-avatar')) {
+    pd.classList.add('hidden');
+  }
+});
