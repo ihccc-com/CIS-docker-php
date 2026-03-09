@@ -403,9 +403,6 @@ function showFileContextMenu(event, fileId) {
 }
 
 /* ---- Modals ---- */
-function openNewFolderModal() { openModal('newFolderModal'); setTimeout(() => document.getElementById('folderNameInput')?.focus(), 50); }
-function openUploadModal() { showToast('仅作演示，上传功能已禁用', 'error'); }
-
 function openShareModal(name) {
   openModal('shareModal');
   const nameEl = document.getElementById('shareModalFileName');
@@ -422,15 +419,6 @@ function confirmDelete(name) {
   openModal('deleteConfirmModal');
   const nameEl = document.getElementById('deleteFileName');
   if (nameEl) nameEl.textContent = name;
-}
-
-function createNewFolder() {
-  const input = document.getElementById('folderNameInput');
-  const name = input ? input.value.trim() : '';
-  if (!name) { showToast('请输入文件夹名称', 'error'); return; }
-  closeModal('newFolderModal');
-  showToast(`文件夹"${name}"已创建`, 'success');
-  if (input) input.value = '';
 }
 
 function doRename() {
@@ -450,11 +438,6 @@ function doDelete() {
 
 function copyShareLink() {
   showToast('链接已复制到剪贴板', 'success');
-}
-
-/* ---- Upload simulation ---- */
-function simulateUpload() {
-  showToast('仅作演示，上传功能已禁用', 'error');
 }
 
 /* ---- Search ---- */
@@ -612,12 +595,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (page === 'shared')  initSharedPage();
   if (page === 'photos')  initPhotosPage();
   if (page === 'trash')   initTrashPage();
-
-  /* Keyboard shortcut: N = new folder */
-  document.addEventListener('keydown', e => {
-    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-    if (e.key === 'n' || e.key === 'N') openNewFolderModal();
-  });
 });
 
 /* ---- Waffle / Profile dropdown toggles (shared across all pages) ---- */
