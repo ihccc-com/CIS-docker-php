@@ -404,7 +404,7 @@ function showFileContextMenu(event, fileId) {
 
 /* ---- Modals ---- */
 function openNewFolderModal() { openModal('newFolderModal'); setTimeout(() => document.getElementById('folderNameInput')?.focus(), 50); }
-function openUploadModal() { openModal('uploadModal'); }
+function openUploadModal() { showToast('仅作演示，上传功能已禁用', 'error'); }
 
 function openShareModal(name) {
   openModal('shareModal');
@@ -454,16 +454,7 @@ function copyShareLink() {
 
 /* ---- Upload simulation ---- */
 function simulateUpload() {
-  closeModal('uploadModal');
-  showToast('开始上传...', 'info');
-  let progress = 0;
-  const interval = setInterval(() => {
-    progress += Math.random() * 20;
-    if (progress >= 100) {
-      clearInterval(interval);
-      showToast('上传完成！', 'success');
-    }
-  }, 400);
+  showToast('仅作演示，上传功能已禁用', 'error');
 }
 
 /* ---- Search ---- */
@@ -622,11 +613,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (page === 'photos')  initPhotosPage();
   if (page === 'trash')   initTrashPage();
 
-  /* Keyboard shortcut: N = new folder, U = upload */
+  /* Keyboard shortcut: N = new folder */
   document.addEventListener('keydown', e => {
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
     if (e.key === 'n' || e.key === 'N') openNewFolderModal();
-    if (e.key === 'u' || e.key === 'U') openUploadModal();
   });
 });
 
